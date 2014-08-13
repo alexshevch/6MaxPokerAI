@@ -53,13 +53,13 @@ def preflop(sb,bb):
             EPbet = int(raw_input("EP: "))
             activePlayers[2][3].append(EPbet)
             if EPbet == bb:
-                oneLimper(rangeIndex, heroPos, bb)
+                limperLP(rangeIndex, heroPos, bb)
             elif EPbet == 0:
                 foldEP(rangeIndex, heroPos, bb)
             elif EPbet > 4*bb:
                 openPush(rangeIndex, heroPos, bb)
             else: #EPbet <= 4bb
-                raiseMP(rangeIndex, heroPos, bb)
+                raiseLP(rangeIndex, heroPos, bb)
 #^^^^^structured^^^^^
 #vvvvv unstructured vvvvvv
     elif heroPos == 4:
@@ -86,6 +86,11 @@ def preflop(sb,bb):
 #preflop single action functions
 
 def foldEP(rangeIndex, heroPos, bb):
+    """
+    Abstractions for position actions:
+     - opponents' actions: everyone folds
+     - hero's position: EP/MP 
+    """
     if rangeIndex > 7:
         activePlayers[heroPos][3].append(bb)
         print activePlayers[heroPos][0]+": "+str(bb)
@@ -95,7 +100,12 @@ def foldEP(rangeIndex, heroPos, bb):
         print activePlayers[heroPos][0]+": "+str(3*bb)
         # process next player
 
-def oneLimper(rangeIndex, heroPos, bb):
+def limperLP(rangeIndex, heroPos, bb):
+    """
+    Abstractions for position actions:
+     - opponents' actions: limper(s)
+     - hero's position: MP/CO/BU
+    """
     if rangeIndex > 7:
         activePlayers[heroPos][3].append(bb)
         print activePlayers[heroPos][0]+": "+str(bb)
@@ -106,6 +116,11 @@ def oneLimper(rangeIndex, heroPos, bb):
         # process next player
 
 def openPush(rangeIndex, heroPos, bb):
+    """
+    Abstractions for position actions:
+     - opponents' actions: push
+     - hero's position: MP/CO/BU/SB/BB 
+    """
     if rangeIndex > 1:
         activePlayers[heroPos][3].append(0)
         print activePlayers[heroPos][0]+": "+str(0)
@@ -115,7 +130,12 @@ def openPush(rangeIndex, heroPos, bb):
         print activePlayers[heroPos][0]+": "+str(activePlayers[heroPos][2]) 
         # process next player
 
-def raiseMP(rangeIndex, heroPos, bb):
+def raiseLP(rangeIndex, heroPos, bb):
+    """
+    Abstractions for position actions:
+     - opponents' actions: one raise
+     - hero's position: MP/CO/BU
+    """
     if rangeIndex > 1:
         activePlayers[heroPos][3].append(EPbet)
         print activePlayers[heroPos][0]+": "+str(EPbet)
@@ -124,6 +144,54 @@ def raiseMP(rangeIndex, heroPos, bb):
         activePlayers[heroPos][3].append(3*EPbet)
         print activePlayers[heroPos][0]+": "+str(3*EPbet)
         # process next player
+
+def foldLP(rangeIndex, heroPos, bb):
+    """
+    Abstractions for position actions:
+     - opponents' actions: everyone folds
+     - hero's position: CO/BU
+    """
+    return rangeIndex
+
+def foldSBB(rangeIndex, heroPos, bb):
+    """
+    Abstractions for position actions:
+     - opponents' actions: everyone folds
+     - hero's position: SB/BB
+    """
+    return rangeIndex
+
+def limperSBB(rangeIndex, heroPos, bb):
+    """
+    Abstractions for position actions:
+     - opponents' actions: limper(s)
+     - hero's position: SB/BB
+    """
+    return rangeIndex
+
+def raiseSBB(rangeIndex, heroPos, bb):
+    """
+    Abstractions for position actions:
+     - opponents' actions: one raise
+     - hero's position: SB/BB
+    """
+    return rangeIndex
+
+def raiseCall(rangeIndex, heroPos, bb):
+    """
+    Abstractions for position actions:
+     - opponents' actions: raise + call(s)
+     - hero's position: CO/BU/SB/BB
+    """
+    return rangeIndex
+
+def reRaise(rangeIndex, heroPos, bb):
+    """
+    Abstractions for position actions:
+     - opponents' actions: raise + reraise
+     - hero's position: CO/BU/SB/BB
+    """
+    return rangeIndex
 
 preflop(1, 2)
 
