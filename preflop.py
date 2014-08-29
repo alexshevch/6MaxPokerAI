@@ -50,16 +50,28 @@ def preflop(sb,bb):
     if heroPos == 2:
         foldEP(rangeIndex, heroPos, bb)
     elif heroPos == 3:
-            EPbet = int(raw_input("EP: "))
-            activePlayers[2][3].append(EPbet)
-            if EPbet == bb:
-                limperLP(rangeIndex, heroPos, bb)
-            elif EPbet == 0:
-                foldEP(rangeIndex, heroPos, bb)
-            elif EPbet > 4*bb:
-                openPush(rangeIndex, heroPos, bb)
-            else: #EPbet <= 4bb
-                raiseLP(rangeIndex, heroPos, bb)
+        EPbet = int(raw_input("EP: "))
+        activePlayers[2][3].append(EPbet)
+        if EPbet == 0:
+            foldEP(rangeIndex, heroPos, bb)
+        elif EPbet == bb:
+            limperLP(rangeIndex, heroPos, bb)
+        elif EPbet <= 4*bb:
+            raiseLP(rangeIndex, heroPos, bb)
+        else: #EPbet > 4bb
+            openPush(rangeIndex, heroPos, bb)
+    elif heroPos == 4:
+        MPbet = int(raw_input("MP: "))
+        activePlayers[2][3].append(MPbet)
+        if MPbet == 0:
+            foldEP(rangeIndex, heroPos, bb)
+        elif MPbet == bb:
+            limperLP(rangeIndex, heroPos, bb)
+        elif MPbet <= 4*bb:
+            raiseLP(rangeIndex, heroPos, bb)
+        else: #EPbet > 4bb
+            openPush(rangeIndex, heroPos, bb)
+        
 #^^^^^structured^^^^^
 #vvvvv unstructured vvvvvv
     elif heroPos == 4:
