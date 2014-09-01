@@ -99,8 +99,8 @@ def preflop(sb,bb):
         activePlayers[2][3].append(EPbet)
         MPbet = int(raw_input("MP: "))
         activePlayers[3][3].append(MPbet)           
-        CObet = int(raw_input("CO: "))
-        activePlayers[4][3].append(MPbet)
+        LPbet = int(raw_input("CO: ")) 
+        activePlayers[4][3].append(LPbet)
         if EPbet == 0:
             if MPbet == 0:
                 if LPbet == 0:
@@ -174,6 +174,9 @@ def foldEP(rangeIndex, heroPos, bb):
      - opponents' actions: everyone folds
      - hero's position: EP/MP 
     """
+    action = sys._getframe().f_code.co_name
+    print str(action)
+
     if rangeIndex > 7:
         activePlayers[heroPos][3].append(bb)
         print activePlayers[heroPos][0]+": "+str(bb)
@@ -189,6 +192,9 @@ def limperLP(rangeIndex, heroPos, bb):
      - opponents' actions: limper(s)
      - hero's position: MP/CO/BU
     """
+    action = sys._getframe().f_code.co_name
+    print str(action)
+
     if rangeIndex > 7:
         activePlayers[heroPos][3].append(bb)
         print activePlayers[heroPos][0]+": "+str(bb)
@@ -204,6 +210,9 @@ def openPush(rangeIndex, heroPos, bb):
      - opponents' actions: push
      - hero's position: MP/CO/BU/SB/BB 
     """
+    action = sys._getframe().f_code.co_name
+    print str(action)
+
     if rangeIndex > 1:
         activePlayers[heroPos][3].append(0)
         print activePlayers[heroPos][0]+": "+str(0)
@@ -219,6 +228,9 @@ def raiseLP(rangeIndex, heroPos, bb):
      - opponents' actions: one raise
      - hero's position: MP/CO/BU
     """
+    action = sys._getframe().f_code.co_name
+    print str(action)
+
     if rangeIndex > 1:
         activePlayers[heroPos][3].append(EPbet)
         print activePlayers[heroPos][0]+": "+str(EPbet)
@@ -235,7 +247,8 @@ def foldLP(rangeIndex, heroPos, bb):
      - hero's position: CO/BU
     """
     action = sys._getframe().f_code.co_name
-    print action
+    print str(action)
+
     return rangeIndex
 
 def foldSBB(rangeIndex, heroPos, bb):
@@ -245,7 +258,8 @@ def foldSBB(rangeIndex, heroPos, bb):
      - hero's position: SB/BB
     """
     action = sys._getframe().f_code.co_name
-    print action
+    print str(action)
+
     return rangeIndex
 
 def limperSBB(rangeIndex, heroPos, bb):
@@ -255,7 +269,8 @@ def limperSBB(rangeIndex, heroPos, bb):
      - hero's position: SB/BB
     """
     action = sys._getframe().f_code.co_name
-    print action
+    print str(action)
+
     return rangeIndex
 
 def raiseSBB(rangeIndex, heroPos, bb):
@@ -265,7 +280,7 @@ def raiseSBB(rangeIndex, heroPos, bb):
      - hero's position: SB/BB
     """
     action = sys._getframe().f_code.co_name
-    print action
+    print "raiseSBB"
     return rangeIndex
 
 def raiseCall(rangeIndex, heroPos, bb):
@@ -275,7 +290,8 @@ def raiseCall(rangeIndex, heroPos, bb):
      - hero's position: CO/BU/SB/BB
     """
     action = sys._getframe().f_code.co_name
-    print action
+    print str(action)
+
     return rangeIndex
 
 def reRaise(rangeIndex, heroPos, bb):
@@ -285,7 +301,8 @@ def reRaise(rangeIndex, heroPos, bb):
      - hero's position: CO/BU/SB/BB
     """
     action = sys._getframe().f_code.co_name
-    print action
+    print str(action)
+
     return rangeIndex
 
 preflop(1, 2)
