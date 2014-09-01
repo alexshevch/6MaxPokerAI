@@ -1,5 +1,6 @@
 from random import randint
 import defs
+import sys
 
 
 # activePlayers is a list of players remaining ingame
@@ -89,7 +90,10 @@ def preflop(sb,bb):
             else: #MPbet > 4bb
                 openPush(rangeIndex, heroPos, bb)
         else: #EPbet > 4bb
-            openPush(rangeIndex, heroPos, bb)
+            if MPbet == 0:
+                openPush(rangeIndex, heroPos, bb)
+            else:
+                reRase(rangeIndex, heroPos, bb)
     elif heroPos == 5:
         EPbet = int(raw_input("EP: "))
         activePlayers[2][3].append(EPbet)
@@ -121,20 +125,44 @@ def preflop(sb,bb):
                     reRaise(rangeIndex, heroPos, bb)
         elif EPbet == bb:
             if MPbet <= bb:
-                limperLP(rangeIndex, heroPos, bb)
+                if LPbet <= bb:
+                    limperLP(rangeIndex, heroPos, bb)
+                elif LPbet <= 4*bb:
+                    raiseLP(rangeIndex, heroPos, bb)
+                else: #LPbet > 4bb
+                    openPush(rangeIndex, heroPos, bb)
             elif MPbet <= 4*bb:
-                raiseLP(rangeIndex, heroPos, bb)
+                if LPbet == 0:
+                    raiseLP(rangeIndex, heroPos, bb)
+                elif LPbet <= 4*bb:
+                    raiseCall(rangeIndex, heroPos, bb)
+                else: #LPbet > 4bb
+                    reRaise(rangeIndex, heroPos, bb)
             else: #MPbet > 4bb
-                openPush(rangeIndex, heroPos, bb)
+                if LPbet == 0:
+                    openPush(rangeIndex, heroPos, bb)
+                else:
+                    reRaise(rangeIndex, heroPos, bb)
         elif EPbet <= 4*bb:
             if MPbet == 0:
-                raiseLP(rangeIndex, heroPos, bb)
+                if LPbet == 0:
+                    raiseLP(rangeIndex, heroPos, bb)
+                elif LPbet <= 4*bb:
+                    raiseCall(rangeIndex, heroPos, bb)
+                else: #LPbet > 4bb
+                    reRaise(rangeIndex, heroPos, bb)
             elif MPbet <= 4*bb:
-                raiseCall(rangeIndex, heroPos, bb)
+                if LPbet <= 4*bb:
+                    raiseCall(rangeIndex, heroPos, bb)
+                else: #LPbet > 4bb
+                    reRaise(rangeIndex, heroPos, bb)
             else: #MPbet > 4bb
-                openPush(rangeIndex, heroPos, bb)
+                reRase(rangeIndex, heroPos, bb)
         else: #EPbet > 4bb
-            openPush(rangeIndex, heroPos, bb)
+            if MPbet == 0 and LPbet == 0:
+                openPush(rangeIndex, heroPos, bb)
+            else:
+                reRaise(rangeIndex, heroPos, bb)
 
     print activePlayers
 
@@ -206,6 +234,8 @@ def foldLP(rangeIndex, heroPos, bb):
      - opponents' actions: everyone folds
      - hero's position: CO/BU
     """
+    action = sys._getframe().f_code.co_name
+    print action
     return rangeIndex
 
 def foldSBB(rangeIndex, heroPos, bb):
@@ -214,6 +244,8 @@ def foldSBB(rangeIndex, heroPos, bb):
      - opponents' actions: everyone folds
      - hero's position: SB/BB
     """
+    action = sys._getframe().f_code.co_name
+    print action
     return rangeIndex
 
 def limperSBB(rangeIndex, heroPos, bb):
@@ -222,6 +254,8 @@ def limperSBB(rangeIndex, heroPos, bb):
      - opponents' actions: limper(s)
      - hero's position: SB/BB
     """
+    action = sys._getframe().f_code.co_name
+    print action
     return rangeIndex
 
 def raiseSBB(rangeIndex, heroPos, bb):
@@ -230,6 +264,8 @@ def raiseSBB(rangeIndex, heroPos, bb):
      - opponents' actions: one raise
      - hero's position: SB/BB
     """
+    action = sys._getframe().f_code.co_name
+    print action
     return rangeIndex
 
 def raiseCall(rangeIndex, heroPos, bb):
@@ -238,6 +274,8 @@ def raiseCall(rangeIndex, heroPos, bb):
      - opponents' actions: raise + call(s)
      - hero's position: CO/BU/SB/BB
     """
+    action = sys._getframe().f_code.co_name
+    print action
     return rangeIndex
 
 def reRaise(rangeIndex, heroPos, bb):
@@ -246,6 +284,8 @@ def reRaise(rangeIndex, heroPos, bb):
      - opponents' actions: raise + reraise
      - hero's position: CO/BU/SB/BB
     """
+    action = sys._getframe().f_code.co_name
+    print action
     return rangeIndex
 
 preflop(1, 2)
