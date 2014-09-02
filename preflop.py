@@ -11,7 +11,7 @@ activePlayers = []
 
 def preflop(sb,bb):
     deck = defs.generateDeck()
-    heroPos = randint(0,5) # get hero's position
+    heroPos = int(raw_input("hero pos from 0 to 5: ")
     myCards = ((10,"h"),(11,"s"))
     deck.remove(myCards[0])
     deck.remove(myCards[1])
@@ -163,6 +163,8 @@ def preflop(sb,bb):
                 openPush(rangeIndex, heroPos, bb)
             else:
                 reRaise(rangeIndex, heroPos, bb)
+    else:
+        print "foldSBB/limperSBB/raiseSBB"
 
     print activePlayers
 
