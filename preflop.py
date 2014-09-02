@@ -11,7 +11,7 @@ activePlayers = []
 
 def preflop(sb,bb):
     deck = defs.generateDeck()
-    heroPos = int(raw_input("hero pos from 0 to 5: ")
+    heroPos = int(raw_input("hero pos from 0 to 5: "))
     myCards = ((10,"h"),(11,"s"))
     deck.remove(myCards[0])
     deck.remove(myCards[1])
@@ -164,9 +164,33 @@ def preflop(sb,bb):
             else:
                 reRaise(rangeIndex, heroPos, bb)
     else:
-        print "foldSBB/limperSBB/raiseSBB"
+        EPbet = int(raw_input("EP: "))
+        activePlayers[2][3].append(EPbet)
+        MPbet = int(raw_input("MP: "))
+        activePlayers[3][3].append(MPbet)           
+        LPbet = int(raw_input("CO: ")) 
+        activePlayers[4][3].append(LPbet)
+        BUbet = int(raw_input("BU: ")) 
+        activePlayers[5][3].append(BUbet)
+        maxBet = max(EPbet,MPbet,LPbet,BUbet)
+        sumBet = sum(EPbet,MPbet,LPbet,BUbet)
+        print maxBet
+        if maxBet == 0:
+            foldSBB(rangeIndex, heroPos, bb)
+        elif maxBet == bb:
+            limperSBB(rangeIndex, heroPos, bb)
+        elif maxBet <= 4*bb:
+            if sumBet <= 4*bb:
+                raiseSBB(rangeIndex, heroPos, bb)
+            else sumbet <= 6*bb:
+                raiseCall(rangeIndex, heroPos, bb)
+        else: #maxBet > 4*bb
+            if sumBet == maxBet:
+                openPush(rangeIndex, heroPos, bb)
+            else:
+                reRaise(rangeIndex, heroPos, bb)
 
-    print activePlayers
+    #print activePlayers
 
 #preflop single action functions
 
