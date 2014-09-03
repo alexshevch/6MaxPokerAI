@@ -1,5 +1,6 @@
 from random import randint
 import preflop
+import postflop
 import defs
 
 
@@ -142,6 +143,6 @@ def compareHands():
 
     print player1Win
 
-preflop(1, 2)
+preflop.preflop(1, 2)
 
 
